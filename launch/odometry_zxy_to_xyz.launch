@@ -1,0 +1,10 @@
+<launch>
+	<!-- rviz -->
+	<node pkg="rviz" type="rviz" name="rviz" args="-d $(find msg_conversion)/rviz_config/demo.rviz"/>
+
+	<!-- main -->
+	<node pkg="msg_conversion" type="odometry_zxy_to_xyz" name="odometry_zxy_to_xyz" output="screen">
+		<remap from="/odom" to="/aft_mapped_to_init"/>
+		<param name="publish_frame" type="string" value="map"/>
+	</node>
+</launch>
