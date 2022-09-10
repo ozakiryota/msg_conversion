@@ -1,0 +1,19 @@
+<launch>
+	<!-- global rosparam -->
+	<param name="use_sim_time" value="true"/>
+
+	<!-- rosbag -->
+	<node pkg="rosbag" type="play" name="player" args="--clock $(env HOME)/rosbag/infant/dkan_outdoor/2019-01-13-15-46-58.bag -s 60 -r 10"/>
+
+	<!-- rviz -->
+	<node pkg="rviz" type="rviz" name="rviz" args="-d $(find msg_conversion)/rviz_config/demo.rviz"/>
+
+	<!-- main -->
+	<node pkg="msg_conversion" type="odometry_twist_to_pose" name="odometry_twist_to_pose" output="screen">
+		<remap from="/odom" to="/tinypower/odom"/>
+		<param name="publish_frame" type="string" value="map"/>
+		<param name="child_frame" type="string" value="twist_to_pose"/>
+	</node>
+
+	<node pkg="msg_conversion_old" name="infant_odometry_republish" type="infant_odometry_republish"/>
+</launch>

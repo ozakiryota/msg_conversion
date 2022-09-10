@@ -41,7 +41,11 @@ target_link_libraries(pc_zxy_to_xyz
 add_executable(odometry_zxy_to_xyz src/odometry_zxy_to_xyz.cpp)
 target_link_libraries(odometry_zxy_to_xyz
   ${catkin_LIBRARIES}
-  ${PCL_LIBRARIES}
+)
+
+add_executable(odometry_twist_to_pose src/odometry_twist_to_pose.cpp)
+target_link_libraries(odometry_twist_to_pose
+  ${catkin_LIBRARIES}
 )
 
 #############
