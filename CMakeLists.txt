@@ -38,6 +38,12 @@ target_link_libraries(pc_zxy_to_xyz
   ${PCL_LIBRARIES}
 )
 
+add_executable(pc_ned_to_nwu src/pc_ned_to_nwu.cpp)
+target_link_libraries(pc_ned_to_nwu
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
+
 add_executable(odometry_zxy_to_xyz src/odometry_zxy_to_xyz.cpp)
 target_link_libraries(odometry_zxy_to_xyz
   ${catkin_LIBRARIES}
