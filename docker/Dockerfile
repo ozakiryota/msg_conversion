@@ -29,16 +29,16 @@ RUN echo 'function cmk(){ \n\
 ########## Cache busting ##########
 ARG CACHEBUST=1
 ########## msg_conversion ##########
-# RUN apt-get update && \
-#     apt-get install -y \
-# 		libpcl-dev \
-# 		ros-noetic-pcl-conversions \
-# 		ros-noetic-image-geometry \
-# 		ros-noetic-cv-bridge \
-# 		ros-noetic-rviz && \
-# 	cd ~/catkin_ws/src && \
-# 	git clone https://github.com/ozakiryota/msg_conversion.git && \
-# 	cd ~/catkin_ws/ && \
-# 	/bin/bash -c "source /opt/ros/noetic/setup.bash; catkin_make"
+RUN apt-get update && \
+    apt-get install -y \
+		libpcl-dev \
+		ros-noetic-pcl-conversions \
+		ros-noetic-image-geometry \
+		ros-noetic-cv-bridge \
+		ros-noetic-rviz && \
+	cd ~/catkin_ws/src && \
+	git clone https://github.com/ozakiryota/msg_conversion.git && \
+	cd ~/catkin_ws/ && \
+	/bin/bash -c "source /opt/ros/noetic/setup.bash; catkin_make"
 ########## Initial position ##########
 WORKDIR /root/catkin_ws/src/msg_conversion
