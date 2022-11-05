@@ -1,13 +1,17 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(msg_conversion)
 
-add_compile_options(-std=c++14 -O2 -g -Wall)
+add_compile_options(-std=c++17 -O2 -g -Wall)
 
-find_package(catkin REQUIRED COMPONENTS
+find_package(
+  catkin REQUIRED COMPONENTS
   roscpp
   tf
+  rosbag
+  cv_bridge
 )
 find_package(PCL)
+find_package(OpenCV)
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -52,6 +56,12 @@ target_link_libraries(odometry_zxy_to_xyz
 add_executable(odometry_twist_to_pose src/odometry_twist_to_pose.cpp)
 target_link_libraries(odometry_twist_to_pose
   ${catkin_LIBRARIES}
+)
+
+add_executable(image_64fc1_to_16uc1_offline src/image_64fc1_to_16uc1_offline.cpp)
+target_link_libraries(image_64fc1_to_16uc1_offline
+  ${catkin_LIBRARIES}
+  ${OpenCV_LIBRARIES}
 )
 
 #############
