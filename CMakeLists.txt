@@ -64,6 +64,11 @@ target_link_libraries(image_64fc1_to_16uc1_offline
   ${OpenCV_LIBRARIES}
 )
 
+add_executable(frame_rename_offline src/frame_rename_offline.cpp)
+target_link_libraries(frame_rename_offline
+  ${catkin_LIBRARIES}
+)
+
 #############
 ## Install ##
 #############

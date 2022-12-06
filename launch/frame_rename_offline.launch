@@ -1,0 +1,10 @@
+<launch>
+	<!-- main -->
+	<node pkg="msg_conversion" type="frame_rename_offline" name="frame_rename_offline" output="screen">
+		<param name="load_rosbag_path" type="string" value="$(env HOME)/rosbag/airsim/drone_2cam_lidar16/2022-10-10-13-32-27.bag"/>
+		<param name="renamed_frame_name" type="string" value="renamed_frame"/>
+		<param name="topic_0" type="string" value="/airsim_node/drone/lidar/LidarCustom"/>
+		<param name="topic_1" type="string" value="/airsim_node/drone/Camera0/Scene/compressed"/>
+		<param name="topic_2" type="string" value="/airsim_node/drone/imu/Imu"/>
+	</node>
+</launch>
