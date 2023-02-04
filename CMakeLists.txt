@@ -63,6 +63,11 @@ target_link_libraries(odometry_twist_to_pose
   ${catkin_LIBRARIES}
 )
 
+add_executable(pose_to_tf src/pose_to_tf.cpp)
+target_link_libraries(pose_to_tf
+  ${catkin_LIBRARIES}
+)
+
 add_executable(image_64fc1_to_16uc1_offline src/image_64fc1_to_16uc1_offline.cpp)
 target_link_libraries(image_64fc1_to_16uc1_offline
   ${catkin_LIBRARIES}
