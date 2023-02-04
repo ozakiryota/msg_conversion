@@ -14,6 +14,4 @@
 		<param name="publish_frame" type="string" value="map"/>
 		<param name="child_frame" type="string" value="twist_to_pose"/>
 	</node>
-
-	<node pkg="msg_conversion_old" name="infant_odometry_republish" type="infant_odometry_republish"/>
 </launch>
