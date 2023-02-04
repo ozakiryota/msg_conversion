@@ -1,5 +1,15 @@
 ########## Pull ##########
 FROM ros:noetic
+########## User ##########
+ARG home_dir="/home/user"
+COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN apt-get update && \
+	apt-get install -y \
+		gosu \
+		sudo && \
+	chmod +x /usr/local/bin/entrypoint.sh && \
+	mkdir -p $home_dir
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 ########## Non-interactive ##########
 ENV DEBIAN_FRONTEND=noninteractive
 ########## Common tool ##########
@@ -11,12 +21,12 @@ RUN apt-get update && \
 		git \
         python-tk
 ########## ROS setup ##########
-RUN mkdir -p ~/catkin_ws/src && \
-	cd ~/catkin_ws && \
+RUN mkdir -p $home_dir/catkin_ws/src && \
+	cd $home_dir/catkin_ws && \
 	/bin/bash -c "source /opt/ros/noetic/setup.bash; catkin_make" && \
-	echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc && \
-	echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc && \
-	echo "export ROS_WORKSPACE=~/catkin_ws" >> ~/.bashrc
+	echo "source /opt/ros/noetic/setup.bash" >> $home_dir/.bashrc && \
+	echo "source ~/catkin_ws/devel/setup.bash" >> $home_dir/.bashrc && \
+	echo "export ROS_WORKSPACE=~/catkin_ws" >> $home_dir/.bashrc
 ## cmk
 RUN echo 'function cmk(){ \n\
 		lastpwd=$OLDPWD \n\
@@ -25,7 +35,7 @@ RUN echo 'function cmk(){ \n\
 		catkin_make $@ \n\
 		cd $cpath \n\
 		OLDPWD=$lastpwd \n\
-        }' >> ~/.bashrc
+        }' >> $home_dir/.bashrc
 ########## Cache busting ##########
 ARG CACHEBUST=1
 ########## msg_conversion ##########
@@ -36,9 +46,10 @@ RUN apt-get update && \
 		ros-noetic-image-geometry \
 		ros-noetic-cv-bridge \
 		ros-noetic-rviz && \
-	cd ~/catkin_ws/src && \
+	cd $home_dir/catkin_ws/src && \
 	git clone https://github.com/ozakiryota/msg_conversion.git && \
-	cd ~/catkin_ws/ && \
+	cd $home_dir/catkin_ws/ && \
 	/bin/bash -c "source /opt/ros/noetic/setup.bash; catkin_make"
 ########## Initial position ##########
-WORKDIR /root/catkin_ws/src/msg_conversion
+WORKDIR $home_dir/catkin_ws/src/msg_conversion
+CMD ["bash"]
