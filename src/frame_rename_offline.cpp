@@ -19,7 +19,7 @@ class FrameRenameOffline{
 		std::string load_rosbag_path_;
 		std::string save_rosbag_path_;
 		std::string renamed_frame_name_;
-		std::string save_topic_childname_;
+		std::string save_topic_suffix_;
         /*function*/
         void openRosBag(rosbag::Bag& bag, const std::string& rosbag_path, int mode);
 
@@ -43,8 +43,8 @@ FrameRenameOffline::FrameRenameOffline()
 	std::cout << "save_rosbag_path_ = " << save_rosbag_path_ << std::endl;
     nh_private_.param("renamed_frame_name", renamed_frame_name_, std::string("renamed_frame"));
 	std::cout << "renamed_frame_name_ = " << renamed_frame_name_ << std::endl;
-    nh_private_.param("save_topic_childname", save_topic_childname_, std::string("renamed"));
-	std::cout << "save_topic_childname_ = " << save_topic_childname_ << std::endl;
+    nh_private_.param("save_topic_suffix", save_topic_suffix_, std::string("renamed"));
+	std::cout << "save_topic_suffix_ = " << save_topic_suffix_ << std::endl;
 
     for(size_t i = 0; ; i++){
         std::string tmp_topic_name;
@@ -82,17 +82,17 @@ void FrameRenameOffline::execute()
         if(view_itr->getDataType() == "sensor_msgs/Image"){
             sensor_msgs::ImagePtr msg_ptr = view_itr->instantiate<sensor_msgs::Image>();
             msg_ptr->header.frame_id = renamed_frame_name_;
-            save_bag_.write(view_itr->getTopic() + "/" + save_topic_childname_, view_itr->getTime(), msg_ptr);
+            save_bag_.write(view_itr->getTopic() + "/" + save_topic_suffix_, view_itr->getTime(), msg_ptr);
         }
         else if(view_itr->getDataType() == "sensor_msgs/CompressedImage"){
             sensor_msgs::CompressedImagePtr msg_ptr = view_itr->instantiate<sensor_msgs::CompressedImage>();
             msg_ptr->header.frame_id = renamed_frame_name_;
-            save_bag_.write(view_itr->getTopic() + "/" + save_topic_childname_, view_itr->getTime(), msg_ptr);
+            save_bag_.write(view_itr->getTopic() + "/" + save_topic_suffix_, view_itr->getTime(), msg_ptr);
         }
         else if(view_itr->getDataType() == "sensor_msgs/PointCloud2"){
             sensor_msgs::PointCloud2Ptr msg_ptr = view_itr->instantiate<sensor_msgs::PointCloud2>();
             msg_ptr->header.frame_id = renamed_frame_name_;
-            save_bag_.write(view_itr->getTopic() + "/" + save_topic_childname_, view_itr->getTime(), msg_ptr);
+            save_bag_.write(view_itr->getTopic() + "/" + save_topic_suffix_, view_itr->getTime(), msg_ptr);
         }
         else{
             std::cout << "Waring: " << view_itr->getDataType() << " is not supported." << std::endl;
